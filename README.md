@@ -20,7 +20,7 @@ cd web
 node server.js
 ```
 
-veya Windows üzerinde `web/baslat.bat` dosyasını çalıştırabilirsiniz. Panel `http://localhost:8080` adresinde açılır.
+Panel varsayılan olarak `http://localhost:8080` adresinde çalışır.
 
 ### 2. Unity İstemcisi
 `unity/` klasörünü Unity Hub üzerinden açıp oyunu başlattığınızda:
