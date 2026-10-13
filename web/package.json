@@ -1,0 +1,11 @@
+{
+  "name": "tetris-telemetry-web",
+  "version": "1.0.0",
+  "description": "Unity Tetris oyunu icin SQLite tabanli yerel telemetri sunucusu ve web paneli.",
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

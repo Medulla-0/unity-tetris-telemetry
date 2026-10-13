@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tetris Telemetri Kayıtları</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>Tetris Telemetri Paneli</h1>
+      <span class="subtitle">SQLite Yerel Kayıtlar</span>
+    </div>
+
+    <div class="topbar-actions">
+      <div class="live-status" id="liveIndicator">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="liveStatusText">Bağlantı bekleniyor</span>
+      </div>
+      <button class="btn" id="btnReset">Kayıtları Temizle</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-title">Toplam Oyun</div>
+        <div class="kpi-value" id="kpiSessions">0</div>
+        <div class="kpi-sub">Ort. Süre: <span id="kpiAvgDuration">0 sn</span></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title">En Yüksek Skor</div>
+        <div class="kpi-value" id="kpiHighScore">0</div>
+        <div class="kpi-sub">Ortalama: <span id="kpiAvgScore">0</span></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title">Maks. Combo</div>
+        <div class="kpi-value" id="kpiBestCombo">x0</div>
+        <div class="kpi-sub">En Üst Seviye: <span id="kpiMaxLevel">Lv.1</span></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title">Silinen Satır</div>
+        <div class="kpi-value" id="kpiTotalLines">0</div>
+        <div class="kpi-sub">4'lü Oranı: <span id="kpiTetrisRate">%0</span></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title">Ortalama APM</div>
+        <div class="kpi-value" id="kpiAvgApm">0</div>
+        <div class="kpi-sub">Dakika Başı Hamle</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title">Üretilen Blok</div>
+        <div class="kpi-value" id="kpiTotalBlocks">0</div>
+        <div class="kpi-sub">Toplam Girdi: <span id="kpiTotalInputs">0</span></div>
+      </div>
+    </section>
+
+    <section class="tables-grid">
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Oyun Kayıtları (Canlı Akış)</h2>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Durum</th>
+                <th>Oyun ID</th>
+                <th>Skor</th>
+                <th>Seviye</th>
+                <th>1x / 2x / 3x / 4x</th>
+                <th>Blok</th>
+                <th>Hamle / Dönüş / Drop / Hold</th>
+                <th>Süre</th>
+                <th>Son Güncelleme</th>
+              </tr>
+            </thead>
+            <tbody id="recentSessionsBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2>En Yüksek Skorlar</h2>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Oyun ID</th>
+                <th>Skor</th>
+                <th>Seviye</th>
+                <th>Combo</th>
+                <th>Satır</th>
+                <th>APM</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboardBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="charts-grid">
+      <div class="panel chart-panel wide">
+        <div class="panel-header">
+          <h2>Oyun Bazlı Skor ve APM</h2>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="scoreApmChart"></canvas>
+        </div>
+      </div>
+
+      <div class="panel chart-panel">
+        <div class="panel-header">
+          <h2>Satır Temizleme Dağılımı</h2>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="lineTypesChart"></canvas>
+        </div>
+      </div>
+
+      <div class="panel chart-panel">
+        <div class="panel-header">
+          <h2>Blok Dağılımı (I, O, T, L, J, S, Z)</h2>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="blocksChart"></canvas>
+        </div>
+      </div>
+
+      <div class="panel chart-panel">
+        <div class="panel-header">
+          <h2>Girdi Dağılımı</h2>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="actionsChart"></canvas>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
